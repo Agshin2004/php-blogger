@@ -122,7 +122,7 @@ class AuthController extends Controller
         
         // Get user by username (if validation succeded)
         $user = User::where('username', '=', $userData['username'])->first();
-        $token = $user->createToken('ourapptoken')->plainTextToken;
+        $token = $user->createToken('bloggertoken')->plainTextToken;
         return $token;
     }
 }
