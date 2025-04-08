@@ -12,6 +12,8 @@ A simple blog app with social and real-time features, built with Laravel.
 - Live search (users & posts)
 - Email on register and new post (queued with jobs)
 - Sign up / login / logout
+- Admin Panel
+- Rich Text Editor (EasyMDE)
 
 ## Stack
 
