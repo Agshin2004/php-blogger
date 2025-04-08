@@ -47,7 +47,7 @@ Route::get('/', function () { {
             ]);
         }
     }
-});
+})->name('home');
 
 Route::middleware(['mustBeLoggedIn'])->group(function () {
     //? Auth Routes.
@@ -103,5 +103,5 @@ Route::get('/post/{post}/edit', [PostController::class, 'showEditForm'])->middle
 Route::patch('/post/{post}', [PostController::class, 'updatePost'])->middleware('can:update,post');
 
 
-
-
+//? 404
+Route::fallback(fn() => abort(404));
