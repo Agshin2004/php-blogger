@@ -19,6 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite('resources/js/app.js')
     @vite('resources/css/app.css')
 </head>
@@ -43,6 +44,10 @@
                             src="{{ auth()->user()->avatar }}" />
                     </a>
                     <a wire:navigate class="btn btn-sm btn-success mr-2" href="/create-post">Create Post</a>
+                    <a wire:navigate class="btn btn-sm btn-primary mr-2" href="/bookmarks/">
+                        My Bookmarks
+                        <i class="ml-2 fa-solid fa-bookmark"></i>
+                    </a>
                     <form action="/logout" method="POST" class="d-inline">
                         @csrf
                         <button class="btn btn-sm btn-secondary">Sign Out</button>

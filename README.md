@@ -14,6 +14,7 @@ A simple blog app with social and real-time features, built with Laravel.
 - Sign up / login / logout
 - Admin Panel
 - Rich Text Editor (EasyMDE)
+- Bookmarking posts (adding and removing)
 
 ## Stack
 

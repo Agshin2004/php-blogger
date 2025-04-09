@@ -95,4 +95,9 @@ class User extends Authenticatable implements FilamentUser, HasName
             'followeduser'
         );
     }
+
+    public function myBookmarks()
+    {
+        return $this->belongsToMany(Post::class, 'bookmarks');
+    }
 }

@@ -146,6 +146,16 @@ textarea.tall-textarea {
     margin: 0;
 }
 
+.utility-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.bookmark-added {
+    color: #007bff;
+    font-size: 18px;
+}
+
 /* Search Overaly */
 .search-overlay {
     display: flex;

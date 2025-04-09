@@ -37,7 +37,12 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        if ($user->role === 'admin') {
+        // Moderator should not be able to modify or delete admin's post
+        if ($user->role === 'moderator' && $post->getUser->role === 'admin') {
+            return false;
+        }
+        
+        if ($user->role === 'admin' || $user->role === 'moderator') {
             return true;
         }
         return $user->id === $post->user_id;
@@ -48,7 +53,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        if ($user->role === 'admin') {
+        if ($user->role === 'admin' || $user->role === 'moderator') {
             return true;
         }
 
