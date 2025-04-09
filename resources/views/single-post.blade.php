@@ -13,12 +13,13 @@
                             title="Delete"><i class="fas fa-trash"></i></button>
                     </form>
                 @endcan
-                <form action="{{ route('addBookmark', ['postId' => $post->id]) }}" method="post">
+                <livewire:bookmark-live :post="$post" />
+                {{-- <form action="{{ route('addBookmark', ['postId' => $post->id]) }}" method="post">
                     @csrf
                     <button class="delete-post-button {{ App\inBookmark(post: $post, user: auth()->user()) }}" data-toggle="tooltip" data-placement="top" title="Add Bookmark">
                         <i class="fa-solid fa-bookmark"></i>
                     </button>
-                </form>
+                </form> --}}
             </div>
         </div>
 
