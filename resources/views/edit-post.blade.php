@@ -1,10 +1,10 @@
 <x-layout doctitle="Editing: {{ $post->title }}">
     <div class="container py-md-5 container--narrow">
-        <form action="/post/{{ $post->id }}" method="POST">
+        <form action="/post/{{ $post->slug }}" method="POST">
             <p>
                 <small>
                     <strong>
-                        <a href="/post/{{ $post->id }}">Go Back</a>
+                        <a href="/post/{{ $post->slug }}">Go Back</a>
                     </strong>
                 </small>
             </p>

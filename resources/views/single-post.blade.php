@@ -4,9 +4,9 @@
             <h2>{{ $post->title }}</h2>
             <div class="utility-buttons pt-2">
                 @can('update', $post)
-                    <a href="/post/{{ $post->id }}/edit" class="text-primary" data-toggle="tooltip"
+                    <a href="/post/{{ $post->slug }}/edit" class="text-primary" data-toggle="tooltip"
                         data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
-                    <form class="delete-post-form d-inline" action="/delete-post/{{ $post->id }}" method="POST">
+                    <form class="delete-post-form d-inline" action="/delete-post/{{ $post->slug }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button class="delete-post-button text-danger" data-toggle="tooltip" data-placement="top"
@@ -14,12 +14,6 @@
                     </form>
                 @endcan
                 <livewire:bookmark-live :post="$post" />
-                {{-- <form action="{{ route('addBookmark', ['postId' => $post->id]) }}" method="post">
-                    @csrf
-                    <button class="delete-post-button {{ App\inBookmark(post: $post, user: auth()->user()) }}" data-toggle="tooltip" data-placement="top" title="Add Bookmark">
-                        <i class="fa-solid fa-bookmark"></i>
-                    </button>
-                </form> --}}
             </div>
         </div>
 

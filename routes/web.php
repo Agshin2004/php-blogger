@@ -54,7 +54,7 @@ Route::middleware(['guest'])->group(function () {
 });
 
 //? Public Routes
-Route::get('/post/{post}', [PostController::class, 'singlePost'])->name('post');
+Route::get('/post/{post:slug}', [PostController::class, 'singlePost'])->name('post');
 Route::get('/profile/{user:username}/followers', [ProfileController::class, 'followers']);
 Route::get('/profile/{user:username}/following', [ProfileController::class, 'following']);
 // By default, laravel will look up id field in {username} so we can specify lookup row with :

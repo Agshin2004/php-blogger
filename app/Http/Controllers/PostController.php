@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendNewPostEmail;
 use App\Models\Post;
+use Cocur\Slugify\Slugify;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -24,11 +25,13 @@ class PostController extends Controller
         $title = strip_tags($data['title']);
         $body = strip_tags($data['body']);
         $userId = auth()->id();
+        $slug = (new Slugify())->slugify($title);
 
         $post = Post::create([
             'title' => $title,
             'body' => $body,
-            'user_id' => $userId
+            'user_id' => $userId,
+            'slug' => $slug
         ]);
 
         // Dispatch a job to its appropriate handler
@@ -38,7 +41,7 @@ class PostController extends Controller
             'postTitle' => $title
         ]));
 
-        return redirect("/post/{$post->id}")->with('success', "New Post \"{$post->title}\" Was Created.");
+        return redirect("/post/{$post->slug}")->with('success', "New Post \"{$post->title}\" Was Created.");
     }
     public function singlePost(Post $post)
     {
@@ -77,7 +80,7 @@ class PostController extends Controller
             'body' => $body
         ]);
 
-        return redirect("/post/{$post->id}/")->with('success', "{$post->title} was updated successfully");
+        return redirect("/post/{$post->slug}/")->with('success', "{$post->title} was updated successfully");
     }
 
     public function search($term)

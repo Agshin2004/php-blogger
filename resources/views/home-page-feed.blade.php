@@ -3,7 +3,7 @@
         @unless ($posts->isEmpty())
             <h1 class="display-5 text-center">Latest From Those You Follow</h1>
             @foreach ($posts as $post)
-                <a wire:navigate href="/post/{{ $post->id }}" class="list-group-item list-group-item-action">
+                <a wire:navigate href="/post/{{ $post->slug }}" class="list-group-item list-group-item-action">
                     <img class="avatar-tiny" src="{{ $post->getUser->avatar }}" />
                     <strong>{{ $post->title }}</strong>
                     <small>
