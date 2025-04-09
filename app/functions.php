@@ -2,8 +2,7 @@
 
 namespace App;
 
-
-function inBookmark($added) 
+function inBookmark(bool $added) 
 {
     return $added ? 'bookmark-added' : '';
 }

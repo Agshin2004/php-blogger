@@ -9,11 +9,12 @@ class BookmarkLive extends Component
 {
     public $count;
     public $post; // Will be passed as argument from single-post
-    public $bookmarkAdded;
+    public $added;
 
     public function mount($post)
     {
         $this->post = $post;
+        $this->added = auth()->user()->myBookmarks->contains($post->id);
     }
 
     public function addOrRemove()
@@ -24,20 +25,21 @@ class BookmarkLive extends Component
         if (auth()->user()->myBookmarks->contains($postId)) {
             // operator can be omitted, every consecutive where clause will be 'and'
             Bookmark::where('user_id', $userId)->where('post_id', $postId)->delete();
-            $this->bookmarkAdded = false;
+            $this->added = false;
             return;
         }
         Bookmark::create([
             'user_id' => $userId,
             'post_id' => $postId
         ]);
-        $this->bookmarkAdded = true;
+
+        $this->added = true;
     }
 
     public function render()
     {
         return view('livewire.bookmarkLive', [
-            'bookmarkdAdded' => $this->bookmarkAdded
+            'added' => $this->added
         ]);
     }
 }
