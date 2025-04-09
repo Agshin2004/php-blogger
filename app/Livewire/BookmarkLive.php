@@ -14,11 +14,13 @@ class BookmarkLive extends Component
     public function mount($post)
     {
         $this->post = $post;
-        $this->added = auth()->user()->myBookmarks->contains($post->id);
+        $this->added = auth()->user()?->myBookmarks->contains($post->id) ?? false;
     }
 
     public function addOrRemove()
     {
+        if (!auth()->check()) return redirect()->route('home')->with('fail', 'Registration Required.');
+        
         $userId = auth()->user()->id;
         $postId = $this->post->id;
 

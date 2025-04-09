@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendNewPostEmail;
 use App\Models\Post;
+use App\Models\IpAddress;
+use App\Models\ViewCount;
 use Cocur\Slugify\Slugify;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PostViewCount;
+use App\Jobs\SendNewPostEmail;
 
 class PostController extends Controller
 {
@@ -45,7 +48,12 @@ class PostController extends Controller
     }
     public function singlePost(Post $post)
     {
+        // Handle post view count
+        $post->viewCount++;
+
+        // Body
         $post->body = Str::markdown($post->body);
+        $post->save();
         return view('single-post', [
             'post' => $post,
         ]);

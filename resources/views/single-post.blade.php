@@ -29,6 +29,12 @@
             {{-- {!! NOT ESCAPED DATA !!} --}}
             {!! $post->body !!}
         </div>
+
+        <br><br>
+        <h5 class="text-right">
+            <b>Views:</b>
+            <i>{{ $post->viewCount }}</i>
+        </h5>
     </div>
 
 </x-layout>

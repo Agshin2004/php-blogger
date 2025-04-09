@@ -22,7 +22,8 @@ class Post extends Model
         'title',
         'body',
         'user_id',
-        'slug'
+        'slug',
+        'viewCount'
     ];
 
     public function getUser()
