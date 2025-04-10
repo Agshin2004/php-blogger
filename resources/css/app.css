@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --main-color: #024950;
+}
+
 body,
 .tooltip {
     font-family: 'Source Sans Pro', sans-serif;
@@ -6,7 +12,7 @@ body,
 }
 
 .header-bar {
-    background-color: #f9322c;
+    background-color: var(--main-color);
 }
 
 .container--narrow {
@@ -409,4 +415,90 @@ header .flex-row > div > div {
 
 .chat-log {
     height: 80%;
+}
+
+/* Header */
+.shadow-button-set {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 2.5vmin;
+    font-family: 'Press Start 2P', sans-serif;
+
+    & > li {
+        display: inline-flex;
+        background: black;
+
+        &:is(:hover, :focus-within) > button:not(:active) {
+            --distance: -10px;
+        }
+    }
+
+    & button {
+        appearance: none;
+        outline: none;
+        font-size: 10px;
+        border: 3px solid black;
+        background: white;
+
+        --distance: 0;
+        transform: translateX(var(--distance)) translateY(var(--distance));
+
+        @media (prefers-reduced-motion: no-preference) {
+            will-change: transform;
+            transition: transform 0.2s ease;
+        }
+    }
+}
+
+.inner-btn {
+    all: unset;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+/* Sign out BTN */
+.button {
+    background: var(--color-back);
+    border-radius: 0.5em;
+    box-shadow: inset 0px -6px 18px -6px rgba(3, 15, 20, 0), inset rgba(54, 69, 75, 1) -1px -1px 6px 0px,
+        inset 12px 0px 12px -6px rgba(3, 15, 20, 0), inset -12px 0px 12px -6px rgba(3, 15, 20, 0),
+        rgba(54, 69, 75, 1) -1px -1px 6px 0px;
+    border: solid 2px #030f14;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0.7em 1.7em;
+    outline: none;
+    transition: all 0.3s;
+    user-select: none;
+}
+
+.button:hover {
+    box-shadow: inset 0px -6px 18px -6px rgba(3, 15, 20, 1), inset 0px 6px 18px -6px rgba(3, 15, 20, 1),
+        inset 12px 0px 12px -6px rgba(3, 15, 20, 0), inset -12px 0px 12px -6px rgba(3, 15, 20, 0),
+        -1px -1px 6px 0px rgba(54, 69, 75, 1);
+}
+
+.button:active {
+    box-shadow: inset 0px -12px 12px -6px rgba(3, 15, 20, 1), inset 0px 12px 12px -6px rgba(3, 15, 20, 1),
+        inset 12px 0px 12px -6px rgba(3, 15, 20, 1), inset -12px 0px 12px -6px rgba(3, 15, 20, 1),
+        -1px -1px 6px 0px rgba(54, 69, 75, 1);
+}
+
+.text {
+    color: #d0a756;
+    font-weight: 700;
+    margin: auto;
+    transition: all 0.3s;
+    width: fit-content;
+}
+
+.button:hover .text {
+    transform: scale(0.9);
+}
+
+.button:active .text {
+    transform: scale(0.8);
 }

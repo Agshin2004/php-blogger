@@ -19,7 +19,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite('resources/js/app.js')
     @vite('resources/css/app.css')
 </head>
@@ -36,23 +38,40 @@
                 <div class="flex-row my-3 my-md-0">
                     @persist('persist_header')
                         <livewire:chat />
-                        <livewire:search />
+                    <livewire:search />
                     @endpersist
+
                     <a wire:navigate href="/profile/{{ auth()->user()->username }}" class="mr-2">
                         <img title="My Profile" data-toggle="tooltip" data-placement="bottom"
-                            style="width: 32px; height: 32px; border-radius: 16px"
+                            style="width: 34px; height: 34px; border-radius: 16px; border: 2px solid purple;"
                             src="{{ auth()->user()->avatar }}" />
                     </a>
-                    <a wire:navigate class="btn btn-sm btn-success mr-2" href="/create-post">Create Post</a>
-                    <a wire:navigate class="btn btn-sm btn-primary mr-2" href="/bookmarks/">
-                        My Bookmarks
-                        <i class="ml-2 fa-solid fa-bookmark"></i>
-                    </a>
+                </div>
+
+
+                <ul class="shadow-button-set">
+                    <li>
+                        <button>
+                            <a wire:navigate class="inner-btn" href="/create-post">Create Post</a>
+                        </button>
+                    </li>
+                    <li>
+                        <button>
+                            <a wire:navigate class="inner-btn" href="/bookmarks/">
+                                My Bookmarks
+                                <i class="ml-2 fa-solid fa-bookmark"></i>
+                            </a>
+                        </button>
+                    </li>
                     <form action="/logout" method="POST" class="d-inline">
                         @csrf
-                        <button class="btn btn-sm btn-secondary">Sign Out</button>
+                        <button class="button">
+                            <div class="text">Sign Out</div>
+                        </button>
                     </form>
-                </div>
+
+
+                </ul>
             @else
                 <form action="/login" method="POST" class="mb-0 pt-2 pt-md-0">
                     @csrf
@@ -71,10 +90,12 @@
                     </div>
                 </form>
             @endauth
-
         </div>
+
+
     </header>
     <!-- header ends here -->
+
 
     {{-- Flash Message --}}
     @if (session()->has('success'))
@@ -104,13 +125,13 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-    </script>
+        </script>
     <script>
         $('[data-toggle="tooltip"]').tooltip()
     </script>
