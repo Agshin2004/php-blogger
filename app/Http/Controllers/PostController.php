@@ -69,11 +69,15 @@ class PostController extends Controller
             ]);
         }
 
+        // Related Posts - Essentially other posts of the user
+        $relatedPosts = Auth::user()->getPosts->where('id', '!=', $post->id);
+
         // Body
         $post->body = Str::markdown($post->body);
         return view('single-post', [
             'post' => $post,
-            'viewCount' => $post->views->count()
+            'viewCount' => $post->views->count(),
+            'relatedPosts' => $relatedPosts
         ]);
     }
 

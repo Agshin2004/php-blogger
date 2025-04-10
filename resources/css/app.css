@@ -502,3 +502,65 @@ header .flex-row > div > div {
 .button:active .text {
     transform: scale(0.8);
 }
+
+.page-container {
+    width: 70vw;
+    margin: 0 auto;
+}
+
+.card-body {
+    font-size: 18px;
+}
+
+/* Related posts card */
+.card-sleek {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    max-width: 200px;
+    min-height: 250px;
+    
+}
+
+.card-sleek  a {
+    all: unset
+}
+
+.card-sleek:hover {
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+.card-sleek .card-body {
+    padding: 2rem;
+}
+
+.card-sleek .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.card-sleek .card-text {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.card-sleek .btn-sleek {
+    background-color: #fff;
+    color: #667eea;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.card-sleek .btn-sleek:hover {
+    background-color: #667eea;
+    color: #fff;
+}
+
+.card-wrapper {
+    display: flex;
+    gap: 30px;
+}
