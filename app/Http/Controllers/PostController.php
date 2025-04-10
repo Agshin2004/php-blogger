@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostView;
 use App\Models\IpAddress;
 use App\Models\ViewCount;
 use Cocur\Slugify\Slugify;
@@ -10,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PostViewCount;
 use App\Jobs\SendNewPostEmail;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -46,16 +48,32 @@ class PostController extends Controller
 
         return redirect("/post/{$post->slug}")->with('success', "New Post \"{$post->title}\" Was Created.");
     }
-    public function singlePost(Post $post)
+    public function singlePost(Post $post, Request $request)
     {
         // Handle post view count
-        $post->viewCount++;
+        $user = Auth::user();
+        $ip = $request->ip();
+
+        $alreadyViewed = PostView::query()
+            ->where('post_id', $post->id)
+            ->when($user, fn($query) => $query->where('user_id', $user->id))
+            ->when(!$user, fn($q) => $q->where('ip_address', $ip))
+            ->exists();
+
+        if (!$alreadyViewed) {
+            PostView::create([
+                'post_id' => $post->id,
+                'user_id' => $user?->id, // If user is logged in add his id
+                // Check if user logged in if yes assign null to ip_address otherwise assign ip to ip_address
+                'ip_address' => $user ? null : $ip
+            ]);
+        }
 
         // Body
         $post->body = Str::markdown($post->body);
-        $post->save();
         return view('single-post', [
             'post' => $post,
+            'viewCount' => $post->views->count()
         ]);
     }
 

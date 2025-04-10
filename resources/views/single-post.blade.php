@@ -33,7 +33,7 @@
         <br><br>
         <h5 class="text-right">
             <b>Views:</b>
-            <i>{{ $post->viewCount }}</i>
+            <i>{{ $viewCount }}</i>
         </h5>
     </div>
 
