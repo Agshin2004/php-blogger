@@ -3,14 +3,15 @@
     <div class="container py-md-5">
         <div class="row align-items-center">
             <div class="col-lg-7 py-3 py-md-5">
-                <h1 class="display-3">Remember Writing?</h1>
-                <p class="lead text-muted">Are you sick of short tweets and impersonal &ldquo;shared&rdquo; posts that
-                    are
-                    reminiscent of the late 90&rsquo;s email forwards? We believe getting back to actually writing is
-                    the
-                    key to enjoying the internet again.
-                    <br>    
-                    Our users have authored {{ $postCount }} posts.
+                <h1 class="display-3">Blogger</h1>
+                <p class="lead text-muted">
+                    More than simple bloggin app with various features.
+                    <br>
+                    <small>
+                        <b>
+                            Our users have authored {{ $postCount }} posts.
+                        </b>
+                    </small>
                 </p>
             </div>
             <div class="col-lg-5 pl-lg-5 pb-3 py-lg-5">

@@ -47,6 +47,7 @@ class MiscellaneousController extends Controller
 
         // toOthers - Broadcast the event to everyone except the current user.
         broadcast(new ChatMessage([
+            'selfmessage' => false,
             'username' => auth()->user()->username,
             'message' => strip_tags($message),
             'avatar' => auth()->user()->avatar
