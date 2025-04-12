@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header pt-0">
                         <div class="d-flex justify-content-between">
-                            <h2>{{ $post->title }}</h2>
+                            <h2>{{ $post->uppercased_title }}</h2>
                             <div class="utility-buttons pt-2">
                                 @can('update', $post)
                                     <a href="/post/{{ $post->slug }}/edit" class="text-primary" data-toggle="tooltip"
@@ -53,7 +53,7 @@
                         <div class="card card-sleek">
                             <a href="{{ route('post', ['post' => $post->slug]) }}">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $post->title }}</h5>
+                                    <h5 class="card-title">{{ $post->uppercased_title }}</h5>
                                     <p class="card-text">
                                         {{-- Limit to 40 chars --}}
                                         {{ \Illuminate\Support\Str::limit($post->body, 40) }}

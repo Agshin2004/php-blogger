@@ -18,6 +18,11 @@ class Post extends Model
             'body' => $this->body
         ];
     }
+    
+    public function getUppercasedTitleAttribute()
+    {
+        return ucfirst($this->title);
+    }
 
     protected $fillable = [
         'title',

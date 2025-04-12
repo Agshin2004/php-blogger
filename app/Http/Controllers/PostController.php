@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\PostView;
-use App\Models\IpAddress;
-use App\Models\ViewCount;
 use Cocur\Slugify\Slugify;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\PostViewCount;
 use App\Jobs\SendNewPostEmail;
 use Illuminate\Support\Facades\Auth;
 
@@ -124,38 +121,59 @@ class PostController extends Controller
 
     public function createNewPostApi(Request $request)
     {
-        $data = $request->validate([
-            'title' => ['required', 'min: 3', 'max: 40'],
-            'body' => ['required'],
-        ]);
+        try {
+            $data = $request->validate([
+                'title' => ['required', 'min: 3', 'max: 40'],
+                'body' => ['required'],
+            ]);
 
-        $title = strip_tags($data['title']);
-        $body = strip_tags($data['body']);
-        $userId = auth()->id();
+            $title = strip_tags($data['title']);
+            $body = strip_tags($data['body']);
+            $userId = auth()->id();
 
-        $post = Post::create([
-            'title' => $title,
-            'body' => $body,
-            'user_id' => $userId
-        ]);
+            $post = Post::create([
+                'title' => $title,
+                'body' => $body,
+                'user_id' => $userId
+            ]);
 
-        // // Dispatch a job to its appropriate handler
-        // dispatch(new SendNewPostEmail([
-        //     'sendTo' => auth()->user()->email,
-        //     'username' => auth()->user()->username,
-        //     'postTitle' => $title
-        // ]));
+            // // Dispatch a job to its appropriate handler
+            // dispatch(new SendNewPostEmail([
+            //     'sendTo' => auth()->user()->email,
+            //     'username' => auth()->user()->username,
+            //     'postTitle' => $title
+            // ]));
 
-        return response()->json([
-            'message' => "{$post->title} Created"
-        ]);
+            return response()->json([
+                'message' => "{$post->title} Created"
+            ]);
+        } catch (\Exception $e) {
+            abort(400, 'bad request');
+        }
     }
 
     public function deletePostApi(Post $post)
     {
-        $title = $post->title;
-        $post->delete();
+        try {
+            $title = $post->title;
+            $post->delete();
 
-        response()->json("{$title} Deleted.");
+        } catch (\Exception) {
+            abort(400, "Post with id ($post->id) not found.");
+        }
+
+        return response()->json("{$title} Deleted.");
+    }
+
+    public function getSinglePostApi($postId)
+    {
+        try {
+            $post = Post::find($postId);
+            $post->getUser;
+
+            return response()->json($post);
+        } catch (\Exception $e) {
+            abort(400, "Post with id ($postId) not found.");
+        }
     }
 }
