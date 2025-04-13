@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class PostPolicy
 {
@@ -41,7 +40,7 @@ class PostPolicy
         if ($user->role === 'moderator' && $post->getUser->role === 'admin') {
             return false;
         }
-        
+
         if ($user->role === 'admin' || $user->role === 'moderator') {
             return true;
         }
@@ -53,6 +52,11 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
+        // Moderator should not be able to modify or delete admin's post
+        if ($user->role === 'moderator' && $post->getUser->role === 'admin') {
+            return false;
+        }
+
         if ($user->role === 'admin' || $user->role === 'moderator') {
             return true;
         }

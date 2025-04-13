@@ -9,9 +9,11 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Jobs\SendNewPostEmail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
+
     public function showCreateForm()
     {
         return view('create-post');
@@ -121,35 +123,32 @@ class PostController extends Controller
 
     public function createNewPostApi(Request $request)
     {
-        try {
-            $data = $request->validate([
-                'title' => ['required', 'min: 3', 'max: 40'],
-                'body' => ['required'],
-            ]);
+        $data = $request->validate([
+            'title' => ['required', 'min: 3', 'max: 40'],
+            'body' => ['required'],
+        ]);
 
-            $title = strip_tags($data['title']);
-            $body = strip_tags($data['body']);
-            $userId = auth()->id();
+        $title = strip_tags($data['title']);
+        $body = strip_tags($data['body']);
+        $userId = auth()->id();
 
-            $post = Post::create([
-                'title' => $title,
-                'body' => $body,
-                'user_id' => $userId
-            ]);
+        $post = Post::create([
+            'title' => $title,
+            'body' => $body,
+            'user_id' => $userId
+        ]);
 
-            // // Dispatch a job to its appropriate handler
-            // dispatch(new SendNewPostEmail([
-            //     'sendTo' => auth()->user()->email,
-            //     'username' => auth()->user()->username,
-            //     'postTitle' => $title
-            // ]));
+        // // Dispatch a job to its appropriate handler
+        // dispatch(new SendNewPostEmail([
+        //     'sendTo' => auth()->user()->email,
+        //     'username' => auth()->user()->username,
+        //     'postTitle' => $title
+        // ]));
 
-            return response()->json([
-                'message' => "{$post->title} Created"
-            ]);
-        } catch (\Exception $e) {
-            abort(400, 'bad request');
-        }
+        return response()->json([
+            'message' => "{$post->title} Created"
+        ]);
+
     }
 
     public function deletePostApi(Post $post)
@@ -168,12 +167,38 @@ class PostController extends Controller
     public function getSinglePostApi($postId)
     {
         try {
-            $post = Post::find($postId);
-            $post->getUser;
+            $post = Post::findOrFail($postId);
+            $post->load('getUser:id,username,email');
 
             return response()->json($post);
         } catch (\Exception $e) {
-            abort(400, "Post with id ($postId) not found.");
+            abort(404, "Post with id ($postId) not found.");
+        }
+    }
+
+    public function updatePostApi(Request $request, $postId)
+    {
+        try {
+            $data = $request->validate([
+                'title' => ['nullable', 'min: 3'], // Title is optional but if present must be min 3 chars
+                'body' => ['required']
+            ]);
+            $post = Post::findOrFail($postId);
+            $post->load('getUser:id,username,email');
+
+            // Since we used $postId instead of post and laravel didn't bind it
+            // And 'can:delete,post' - is just wrapper to Gate::authorize()
+            // We gotta bind it manually so policies will be checked
+            // Gate::authorize('update', $post);
+            Gate::authorize('update', $post);
+            $post->update($data);
+
+            return response()->json([
+                'post' => $post
+            ]);
+
+        } catch (\Exception $e) {
+            abort(404, $e->getMessage());
         }
     }
 }
