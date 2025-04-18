@@ -8,7 +8,7 @@ A simple blog app with social and real-time features, built with Laravel.
 - Follow users and see a personalized feed
 - Create, update, and delete posts (auth only)
 - Add/update profile picture
-- Token auth with Sanctum
+- Token auth with Sanctum (JWT will be implemented when I feel so)
 - Live search (users & posts)
 - Email on register and new post (queued with jobs)
 - Sign up / login / logout
